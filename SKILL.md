@@ -28,130 +28,58 @@ I'll interview you systematically about your needs. Questions are organized in *
 
 ---
 
-## Round 1: Foundation
+## Round 1: Core Setup
 
-❓ **Q1** - **Daily Notification Timing**: What time should you receive the brief each morning? (e.g., 7 AM, 8 AM)
-
-➡️ 7:00 AM Asia/Tokyo (adjust for your timezone)
-
----
-
-❓ **Q2** - **Project Scope**: How many projects do you want to monitor? 
+❓ **Q1** - **Daily Schedule & Telegram**: What time do you want the brief, and do you have a Telegram bot ready?
 
 Options:
-- Just 1 (single project focus)
-- 2-3 (core projects)
-- 4+ (many projects, comprehensive view)
+- Time: 7 AM / 8 AM / 9 AM / other (timezone?)
+- Telegram: Already have bot token & user ID / Need to create / Not sure
 
-➡️ 2-3 (a good balance for most people)
-
----
-
-❓ **Q3** - **Telegram Setup Status**: Do you already have a Telegram bot and know your user ID?
-
-Options:
-- Yes, I have both
-- No, I need to create them first
-- Not sure
-
-➡️ If unsure, I'll guide you through creation first
+➡️ 7 AM Asia/Tokyo. I can guide you through Telegram setup if needed.
 
 ---
 
-**Your turn:** Answer Q1-Q3 above (or tell me to adjust the recommended answers). Once you answer, I'll unlock the next round of questions.
-
----
-
-## Round 2: Projects & Monitoring
-
-*(This round unlocks after Round 1)*
-
-❓ **Q4** - **Project Paths**: List the full paths to the projects you want to monitor.
+❓ **Q2** - **Projects to Monitor**: Which projects should I watch? List paths or just tell me how many + which are GSD projects.
 
 Example:
 ```
-/Users/you/Documents/project1
-/Users/you/Documents/project2
-/Users/you/Documents/project3
+/Users/you/project1 (GSD)
+/Users/you/project2 (regular)
 ```
 
-➡️ I'll use `git log --since="yesterday"` to extract commits from each path
+➡️ I'll auto-detect `.planning/STATE.md` and adjust monitoring per project.
 
 ---
 
-❓ **Q5** - **Key Files to Track**: For each project, are there specific files you want to monitor for changes?
+❓ **Q3** - **What Matters in the Brief**: What should the daily summary focus on?
 
 Options:
-- Default files only (commit history is enough)
-- Track specific files (e.g., `.planning/STATE.md`, `package.json`, `Cargo.toml`)
-- Mix (some projects tracked, others not)
+- Commits only (what code changed)
+- Commits + project status (if GSD)
+- Commits + specific files you care about (package.json, Cargo.toml, etc.)
 
-➡️ Default files only (simpler, covers 80% of cases)
-
----
-
-❓ **Q6** - **GSD Integration**: Do any of your projects use the GSD framework (have `.planning/STATE.md`)?
-
-Options:
-- Yes, some or all of them do
-- No, they're regular projects
-- Mixed
-
-➡️ I'll auto-detect and show GSD status when available
+➡️ Commits + project status (most useful for tracking)
 
 ---
 
-**Your turn:** Answer Q4-Q6. I'll then move to Round 3 (Telegram setup).
-
----
-
-## Round 3: Telegram Configuration
-
-*(This round unlocks after Round 2)*
-
-❓ **Q7** - **Telegram Bot Status**: 
-
-- Do you already have a Telegram bot token from @BotFather?
-- Do you know your Telegram user ID?
-
-Options:
-- Yes to both
-- No to both (need guidance)
-- Partial (have token, need user ID)
-
-➡️ If "No to both", I'll guide you through the process
-
----
-
-❓ **Q8** - **Brief Format Preference**: How detailed should the daily brief be?
-
-Options:
-- Concise (commits only)
-- Detailed (commits + GSD status + file changes)
-- Custom (specify what matters most)
-
-➡️ Detailed (most informative for tracking progress)
-
----
-
-**Your turn:** Answer Q7-Q8. Once done, we move to the final phase.
+**Your turn:** Answer Q1-Q3 (or adjust the recommended answers). Once you answer, I'll confirm we have everything and set up your script.
 
 ---
 
 ## After the Interview: Script Generation & Installation
 
-Once all decisions are settled, I will:
+Once you answer all questions, I will:
 
-1. ✅ Create a custom `session-brief.sh` script based on your answers
+1. ✅ Create a custom `session-brief.sh` script tailored to your setup
 2. ✅ Create `~/.session-brief/config.json` with your configuration
-3. ✅ Install a cron job to run the script at your chosen time
-4. ✅ Send you a test message to Telegram to verify everything works
+3. ✅ Install a cron job to run at your chosen time
+4. ✅ Send a test message to Telegram
+5. ✅ Done! You'll get briefs every morning automatically
 
 ---
 
-**Ready to start the interview?**
-
-Say: **"Let's grill"** or just answer the questions from Round 1 above, and I'll proceed.
+**Ready?** Just answer the three questions from Round 1 above (or adjust the recommended answers), and we'll proceed to script generation.
 
 ### Phase 2: Generate Custom Script
 
