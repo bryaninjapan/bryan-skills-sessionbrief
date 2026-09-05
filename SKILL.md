@@ -15,71 +15,37 @@ Generate a daily summary of work done across your tracked git projects and send 
 
 ## The Process
 
-### Phase 1: Interview (Grilling)
+### Phase 1: Interview (Grilling Approach)
 
-I'll interview you systematically about your needs. Questions are organized in **rounds**. Each round asks all questions whose answers don't depend on future decisions.
+I'll interview you to understand your setup. I'll ask questions naturally, in your language, building a shared understanding step by step.
 
-**Format:**
-- ❓ = Question  
-- ➡️ = My recommended answer (accept or override)
-- **After each round**, you answer, and I recompute the frontier for the next round
+**How this works:**
+- I ask what I need to know (schedule, projects, Telegram setup, etc.)
+- You answer naturally — no specific format needed
+- Based on your answers, I unlock new questions or clarify dependencies
+- When all decisions are settled, we generate your script
 
-**The interview is done** when every decision is settled and we reach shared understanding.
+**What I need to understand:**
 
----
-
-## Round 1: Core Setup
-
-❓ **Q1** - **Daily Schedule & Telegram**: What time do you want the brief, and do you have a Telegram bot ready?
-
-Options:
-- Time: 7 AM / 8 AM / 9 AM / other (timezone?)
-- Telegram: Already have bot token & user ID / Need to create / Not sure
-
-➡️ 7 AM Asia/Tokyo. I can guide you through Telegram setup if needed.
+1. **Timing & Access** — When do you want the brief? Do you have Telegram set up?
+2. **Projects** — Which projects to monitor? (paths, how many, any GSD projects?)
+3. **Preferences** — What matters in the daily summary? (just commits, or also project status, file changes?)
+4. **Telegram** — Do you have bot token & user ID, or do you need help creating them?
 
 ---
 
-❓ **Q2** - **Projects to Monitor**: Which projects should I watch? List paths or just tell me how many + which are GSD projects.
+### Phase 2: Script Generation
 
-Example:
-```
-/Users/you/project1 (GSD)
-/Users/you/project2 (regular)
-```
+Once we've discussed these topics and reached understanding, I'll:
 
-➡️ I'll auto-detect `.planning/STATE.md` and adjust monitoring per project.
-
----
-
-❓ **Q3** - **What Matters in the Brief**: What should the daily summary focus on?
-
-Options:
-- Commits only (what code changed)
-- Commits + project status (if GSD)
-- Commits + specific files you care about (package.json, Cargo.toml, etc.)
-
-➡️ Commits + project status (most useful for tracking)
+1. ✅ Generate a custom `session-brief.sh` script for your setup
+2. ✅ Create `~/.session-brief/config.json` with your configuration  
+3. ✅ Help you install the cron job
+4. ✅ Send a test message to verify everything works
 
 ---
 
-**Your turn:** Answer Q1-Q3 (or adjust the recommended answers). Once you answer, I'll confirm we have everything and set up your script.
-
----
-
-## After the Interview: Script Generation & Installation
-
-Once you answer all questions, I will:
-
-1. ✅ Create a custom `session-brief.sh` script tailored to your setup
-2. ✅ Create `~/.session-brief/config.json` with your configuration
-3. ✅ Install a cron job to run at your chosen time
-4. ✅ Send a test message to Telegram
-5. ✅ Done! You'll get briefs every morning automatically
-
----
-
-**Ready?** Just answer the three questions from Round 1 above (or adjust the recommended answers), and we'll proceed to script generation.
+**Ready to start?** Just tell me what you're trying to do, and we'll take it from there.
 
 ### Phase 2: Generate Custom Script
 
