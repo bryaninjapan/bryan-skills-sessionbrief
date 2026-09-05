@@ -12,24 +12,29 @@ Daily work summary across your projects, delivered to Telegram.
 
 ## Installation
 
-### Option A: Quick Install (Recommended)
+Choose your preferred method:
 
-```bash
-bash <(curl -sL https://raw.githubusercontent.com/bryaninjapan/bryan-skills-sessionbrief/main/install.sh)
-```
-
-### Option B: Manual Install
+### Option 1: Git Clone
 
 ```bash
 cd ~/.claude/skills
 git clone https://github.com/bryaninjapan/bryan-skills-sessionbrief.git session-brief
 ```
 
-### Option C: Download ZIP
+### Option 2: Download ZIP
 
 1. Go to [GitHub repo](https://github.com/bryaninjapan/bryan-skills-sessionbrief)
 2. Click **Code** → **Download ZIP**
-3. Unzip to `~/.claude/skills/session-brief`
+3. Extract to `~/.claude/skills/session-brief`
+
+### Option 3: Create Directory & Copy Files
+
+```bash
+mkdir -p ~/.claude/skills/session-brief
+# Then copy SKILL.md, README.md, etc. from this repo
+```
+
+**See [INSTALL.md](INSTALL.md) for detailed instructions.**
 
 ---
 

@@ -1,24 +1,8 @@
 # Installation Guide
 
-Three ways to install Session Brief skill for Claude Code.
+Choose the installation method that works best for you.
 
-## Option 1: One-Line Quick Install (Recommended)
-
-Run this in your terminal:
-
-```bash
-bash <(curl -sL https://raw.githubusercontent.com/bryaninjapan/bryan-skills-sessionbrief/main/install.sh)
-```
-
-This will:
-- ✅ Create `~/.claude/skills/session-brief/` if needed
-- ✅ Clone the repo
-- ✅ Show you next steps
-- Done! Then run `/session-brief --setup` in Claude Code
-
----
-
-## Option 2: Manual Git Clone
+## Option 1: Git Clone
 
 If you prefer to install manually:
 
@@ -35,16 +19,26 @@ Then in Claude Code:
 
 ---
 
-## Option 3: Download ZIP
+## Option 2: Download ZIP
 
 1. Go to: https://github.com/bryaninjapan/bryan-skills-sessionbrief
 2. Click the green **Code** button
 3. Select **Download ZIP**
-4. Unzip to: `~/.claude/skills/session-brief`
+4. Create `~/.claude/skills/session-brief/` directory
+5. Extract the ZIP contents into that directory
 
 Then in Claude Code:
 ```bash
 /session-brief --setup
+```
+
+## Option 3: Manual Copy
+
+If you prefer to copy files manually:
+
+```bash
+mkdir -p ~/.claude/skills/session-brief
+# Copy SKILL.md, README.md, and INSTALL.md to that directory
 ```
 
 ---
@@ -102,21 +96,6 @@ Then:
 2. Verify installation: `ls ~/.claude/skills/session-brief/SKILL.md`
 3. Check that `SKILL.md` exists in the directory
 
-### "Permission denied" on install.sh
-
-**Problem:** `bash: ./install.sh: Permission denied`
-
-**Solution:**
-```bash
-chmod +x ~/Documents/session-brief/install.sh
-bash ~/Documents/session-brief/install.sh
-```
-
-Or use the curl method instead:
-```bash
-bash <(curl -sL https://raw.githubusercontent.com/bryaninjapan/bryan-skills-sessionbrief/main/install.sh)
-```
-
 ### Git not found
 
 **Problem:** `command not found: git`
@@ -153,12 +132,7 @@ cd ~/.claude/skills/session-brief
 git pull origin main
 ```
 
-Or reinstall:
-
-```bash
-rm -rf ~/.claude/skills/session-brief
-bash <(curl -sL https://raw.githubusercontent.com/bryaninjapan/bryan-skills-sessionbrief/main/install.sh)
-```
+Or reinstall by downloading the latest version again.
 
 ---
 
