@@ -10,6 +10,29 @@ Daily work summary across your projects, delivered to Telegram.
 - 🔔 Sends a formatted brief to Telegram every morning
 - ⏰ Fully customizable: time, projects, monitored files
 
+## Installation
+
+### Option A: Quick Install (Recommended)
+
+```bash
+bash <(curl -sL https://raw.githubusercontent.com/bryaninjapan/bryan-skills-sessionbrief/main/install.sh)
+```
+
+### Option B: Manual Install
+
+```bash
+cd ~/.claude/skills
+git clone https://github.com/bryaninjapan/bryan-skills-sessionbrief.git session-brief
+```
+
+### Option C: Download ZIP
+
+1. Go to [GitHub repo](https://github.com/bryaninjapan/bryan-skills-sessionbrief)
+2. Click **Code** → **Download ZIP**
+3. Unzip to `~/.claude/skills/session-brief`
+
+---
+
 ## Quick Start
 
 ### 1. In Claude Code
