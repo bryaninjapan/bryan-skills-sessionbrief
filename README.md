@@ -77,7 +77,7 @@ Paste the cron command Claude provides.
 | Telegram notifications | ✅ |
 | Customizable schedule | ✅ |
 | Hermes runtime | ✅ (clarify form mapping, v1.1.0) |
-| OpenCode runtime | 🔄 (planned) |
+| OpenCode runtime | ✅ (question form mapping, v1.2.0) |
 
 ## How It Works
 
@@ -171,7 +171,7 @@ MIT
 ## Roadmap
 
 - [x] Hermes runtime support
-- [ ] OpenCode runtime support
+- [x] OpenCode runtime support
 - [ ] Multi-language support
 - [ ] Custom brief templates
 - [ ] Slack integration

@@ -2,7 +2,7 @@
 name: Session Brief
 description: Generate daily work summary across projects and send to Telegram
 when_to_use: daily morning briefing or on-demand work summary across git projects
-version: 1.1.0
+version: 1.2.0
 ---
 
 # Session Brief (Claude Code / Hermes Skill)
@@ -14,6 +14,8 @@ Generate a daily summary of work done across your tracked git projects and send 
 > **Note:** This skill is optimized for Claude Code, using interactive forms (AskUserQuestion) for a smooth setup experience. The underlying functionality (git scanning, Telegram delivery, script generation) works on any platform.
 >
 > **Hermes runtime:** there is no AskUserQuestion in Hermes — use the native `clarify` tool instead. See [Hermes Runtime: clarify form mapping](#hermes-runtime-clarify-form-mapping) below.
+>
+> **OpenCode runtime:** OpenCode has its own interactive form tool — use the built-in `question` tool. See [OpenCode Runtime: question tool mapping](#opencode-runtime-question-tool-mapping) below.
 
 ---
 
@@ -50,6 +52,65 @@ clarify(
      choices: ["Not yet — walk me through it", "I already have a bot token and user ID"]},
     {question: "Q4: What time should the daily brief be sent?",
      choices: ["7:00 AM (default)", "8:00 AM", "10:00 PM (previous-evening summary)"]},
+  ]
+)
+```
+
+---
+
+## OpenCode Runtime: question tool mapping
+
+When executed by OpenCode, replace AskUserQuestion with the built-in **`question`** tool. The interaction maps 1:1:
+
+| Concept | Claude Code | OpenCode |
+|---|---|---|
+| Form tool | AskUserQuestion | `question` (built-in) |
+| Options per question | 4 max | No hard limit (keep ≤ 4 for readability) |
+| Recommended answer | First option marked (Recommended) | First option marked (Recommended) |
+| Free-text input | Other field | "Type your own answer" auto-appended |
+| Questions per call | One at a time | Multiple in one call |
+
+**Execution rules for OpenCode:**
+
+1. Send every question of the same round in **one single** `question` call — do not ask one at a time.
+2. Keep each question to at most 4 `options`, with the recommended answer first (OpenCode auto-appends a "Type your own answer" row for free-text input).
+3. If the user **dismisses** the form (skips without answering), adopt that question's recommended answer — do not re-ask.
+4. Investigate before asking: scan for git repositories (`find ~ -maxdepth 2 -name .git`), detect GSD projects (`.planning/STATE.md`), and check whether a Telegram bot token already exists on this machine (e.g. `~/.session-brief/config.json` or `~/.gsd-session-brief/config.json`) before asking the user to create one.
+5. Everything else — generating `session-brief.sh`, writing the config, installing cron, and the curl sendMessage call — is platform-independent and stays as documented.
+
+**OpenCode Round 1 call template (copy-paste):**
+
+```
+question(
+  questions=[
+    {question: "Q1: What do you want Session Brief for? What matters most in the daily summary?",
+     header: "Purpose",
+     options: [
+       {label: "Daily work tracking + project status overview (Recommended)",
+        description: "See yesterday's work per project + GSD phase progress"},
+       {label: "Commit history only",
+        description: "Just list yesterday's commits per project"},
+       {label: "Progress reports for specific projects",
+        description: "Mainly report progress on specific projects"}],
+     },
+    {question: "Q2: Which projects should I monitor?",
+     header: "Projects",
+     options: [
+       {label: "All scanned git repos (Recommended)",
+        description: "Every repo detected in the scan"},
+       {label: "GSD projects only",
+        description: "Only projects with .planning/STATE.md"},
+       {label: "I'll provide the paths",
+        description: "Manually enter paths to monitor"}],
+     },
+    {question: "Q3: Is Telegram set up? (Bot token from @BotFather + your user ID)",
+     header: "Telegram",
+     options: [
+       {label: "Not yet — walk me through it (Recommended)",
+        description: "Guide through creating a bot and getting the user ID"},
+       {label: "I already have a bot token and user ID",
+        description: "Provide them directly and skip the tutorial"}],
+     },
   ]
 )
 ```
@@ -426,8 +487,8 @@ Edit `~/.session-brief/config.json`:
 ### Works with:
 - ✅ Any git project
 - ✅ GSD projects (reads `.planning/STATE.md`)
-- ✅ Hermes (planned: native runtime)
-- ✅ OpenCode (planned: native runtime)
+- ✅ Hermes (clarify form mapping — v1.1.0)
+- ✅ OpenCode (question form mapping — v1.2.0)
 
 ### Not needed for:
 - ❌ GitHub API (uses local git only)
@@ -439,7 +500,7 @@ Edit `~/.session-brief/config.json`:
 ## Roadmap
 
 - [x] Hermes runtime support (clarify form mapping — v1.1.0)
-- [ ] OpenCode runtime support (cloud execution)
+- [x] OpenCode runtime support (question form mapping — v1.2.0)
 - [ ] Custom Slack integration
 - [ ] Email delivery option
 - [ ] Multi-language summaries
