@@ -76,7 +76,8 @@ Paste the cron command Claude provides.
 | GSD project status | ✅ (if .planning/STATE.md exists) |
 | Telegram notifications | ✅ |
 | Customizable schedule | ✅ |
-| Multi-runtime support | 🔄 (planned: Hermes, OpenCode) |
+| Hermes runtime | ✅ (clarify form mapping, v1.1.0) |
+| OpenCode runtime | 🔄 (planned) |
 
 ## How It Works
 
@@ -91,17 +92,17 @@ Paste the cron command Claude provides.
 ```
 📋 Session Brief - 2026-09-05
 
-📦 gsd-addon
+📦 project-a
 GSD: Phase 18 | Milestone: Dispatch Script Split
 📝 Commits (3):
 ✨ Features:
   • feat: add new feature
 🐛 Fixes:
-  • fix: resolve issue
+  • fix: bug fix
 📚 Docs:
   • docs: update guide
 
-📦 soapwavehealing
+📦 project-b
 📝 Commits (2):
   • feat: implement feature
   • fix: bug fix
@@ -169,7 +170,7 @@ MIT
 
 ## Roadmap
 
-- [ ] Hermes runtime support
+- [x] Hermes runtime support
 - [ ] OpenCode runtime support
 - [ ] Multi-language support
 - [ ] Custom brief templates

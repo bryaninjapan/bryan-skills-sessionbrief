@@ -2,16 +2,57 @@
 name: Session Brief
 description: Generate daily work summary across projects and send to Telegram
 when_to_use: daily morning briefing or on-demand work summary across git projects
-version: 1.0.0
+version: 1.1.0
 ---
 
-# Session Brief (Claude Code Skill)
+# Session Brief (Claude Code / Hermes Skill)
 
 Generate a daily summary of work done across your tracked git projects and send it to Telegram.
 
 **Core idea:** Every morning, get a clear picture of what you accomplished yesterday — organized by project, categorized by type (feat / fix / docs), with GSD project status if available.
 
-> **Note:** This skill is optimized for Claude Code, using interactive forms (AskUserQuestion) for a smooth setup experience. The underlying functionality (git scanning, Telegram delivery, script generation) works on any platform; other runtimes would use text-based interaction instead.
+> **Note:** This skill is optimized for Claude Code, using interactive forms (AskUserQuestion) for a smooth setup experience. The underlying functionality (git scanning, Telegram delivery, script generation) works on any platform.
+>
+> **Hermes runtime:** there is no AskUserQuestion in Hermes — use the native `clarify` tool instead. See [Hermes Runtime: clarify form mapping](#hermes-runtime-clarify-form-mapping) below.
+
+---
+
+## Hermes Runtime: clarify form mapping
+
+When executed by Hermes Agent, replace AskUserQuestion with the native **`clarify`** tool. The interaction maps 1:1:
+
+| Concept | Claude Code | Hermes |
+|---|---|---|
+| Form tool | AskUserQuestion | `clarify` (built-in) |
+| Max options per question | 4 | 4 |
+| Recommended answer | First option marked (Recommended) | First option marked (Recommended) |
+| Free-text input | Other field | Other row auto-appended |
+| Questions per call | One at a time | Up to 5 per call |
+
+**Execution rules for Hermes:**
+
+1. Send every question of the same round in **one single** `clarify` call (up to 5 questions) — do not ask one at a time.
+2. Keep each question to at most 4 `choices`, with the recommended answer first (Hermes marks the first option as Recommended and auto-appends an Other row for free-text input).
+3. The response comes back as `{responses: [...]}` in question order; an **empty string response means the user skipped or dismissed the form** → adopt that question's recommended answer, do not re-ask.
+4. Investigate before asking: scan for git repositories (`find ~ -maxdepth 2 -name .git`), detect GSD projects (`.planning/STATE.md`), and check whether a Telegram bot token already exists on this machine (e.g. in the agent's gateway env config) before asking the user to create one.
+5. Everything else — generating `session-brief.sh`, writing `~/.session-brief/config.json`, installing cron, and the curl sendMessage call — is platform-independent and stays as documented.
+
+**Hermes Round 1 call template (copy-paste):**
+
+```
+clarify(
+  questions=[
+    {question: "Q1: What do you want Session Brief for? What matters most in the daily summary?",
+     choices: ["Daily work tracking + project status overview (recommended)", "Commit history only", "Progress reports for specific projects"]},
+    {question: "Q2: Which projects should I monitor? (Scan git repos and GSD projects first)",
+     choices: ["All scanned git repos", "GSD projects only (have .planning/)", "I'll provide the paths"]},
+    {question: "Q3: Is Telegram set up? (Bot token from @BotFather + your user ID)",
+     choices: ["Not yet — walk me through it", "I already have a bot token and user ID"]},
+    {question: "Q4: What time should the daily brief be sent?",
+     choices: ["7:00 AM (default)", "8:00 AM", "10:00 PM (previous-evening summary)"]},
+  ]
+)
+```
 
 ---
 
@@ -48,8 +89,8 @@ Give me the paths to your git projects, or just tell me: how many projects, and 
 
 Examples:
 ```
-/Users/you/gsd-addon (GSD)
-/Users/you/soapwavehealing (GSD)
+/Users/you/project-a (GSD)
+/Users/you/project-b (GSD)
 /Users/you/my-app (regular)
 ```
 
@@ -91,8 +132,8 @@ Based on your answers, I generate a bash script (`session-brief.sh`) customized 
 #!/bin/bash
 # Auto-generated session-brief script
 # Your config: 
-#   - Time: 7 AM Asia/Tokyo
-#   - Projects: gsd-addon, soapwavehealing
+#   - Time: 7 AM <your timezone>
+#   - Projects: <project-a>, <project-b>
 #   - Key files: .planning/STATE.md
 #   - Telegram: configured
 
@@ -114,14 +155,14 @@ From tomorrow morning, you'll get a Telegram message with:
 ```
 📋 Session Brief - 2026-09-05
 
-📦 gsd-addon
+📦 project-a
 GSD: Phase 18 | Milestone: Dispatch Script Split
 📝 Commits (3):
 ✨ Features: feat: add new feature
 🐛 Fixes: fix: resolve issue
 📚 Docs: docs: update guide
 
-📦 soapwavehealing
+📦 project-b
 📝 Commits (2):
   • feat: implement feature
   • fix: bug fix
@@ -199,7 +240,7 @@ GSD: Phase 18 | Milestone: Dispatch Script Split
   "schedule": {
     "hour": 7,
     "minute": 0,
-    "timezone": "Asia/Tokyo"
+    "timezone": "UTC"
   },
   "projects": [
     "/Users/you/Documents/project1",
@@ -229,7 +270,7 @@ A bash script that:
 0 22 * * * /Users/you/.session-brief/session-brief.sh 2>&1 | logger -t session-brief
 ```
 
-(Runs at 10 PM UTC = 7 AM Asia/Tokyo)
+(Runs at 10 PM UTC — adjust the cron hour for your timezone)
 
 ---
 
@@ -283,7 +324,7 @@ Claude: What time should I send the brief? (e.g., 7 AM)
 You: 7 AM
 
 Claude: Which projects should I monitor? (comma-separated paths)
-You: /Users/me/Documents/gsd-addon, /Users/me/Documents/soapwavehealing
+You: /Users/you/Documents/project-a, /Users/you/Documents/project-b
 
 Claude: Telegram bot token?
 You: 123456:ABC-DEF...
@@ -397,7 +438,7 @@ Edit `~/.session-brief/config.json`:
 
 ## Roadmap
 
-- [ ] Hermes runtime support (native integration)
+- [x] Hermes runtime support (clarify form mapping — v1.1.0)
 - [ ] OpenCode runtime support (cloud execution)
 - [ ] Custom Slack integration
 - [ ] Email delivery option
