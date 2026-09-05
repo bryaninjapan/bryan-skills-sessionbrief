@@ -5,11 +5,13 @@ when_to_use: daily morning briefing or on-demand work summary across git project
 version: 1.0.0
 ---
 
-# Session Brief
+# Session Brief (Claude Code Skill)
 
 Generate a daily summary of work done across your tracked git projects and send it to Telegram.
 
 **Core idea:** Every morning, get a clear picture of what you accomplished yesterday — organized by project, categorized by type (feat / fix / docs), with GSD project status if available.
+
+> **Note:** This skill is optimized for Claude Code, using interactive forms (AskUserQuestion) for a smooth setup experience. The underlying functionality (git scanning, Telegram delivery, script generation) works on any platform; other runtimes would use text-based interaction instead.
 
 ---
 

@@ -2,6 +2,8 @@
 
 Daily work summary across your projects, delivered to Telegram.
 
+**Designed for Claude Code.** Optimized interactive setup experience on Claude Code; core functionality works on any platform.
+
 ## What It Does
 
 - 📋 Scans your git projects for work done yesterday
