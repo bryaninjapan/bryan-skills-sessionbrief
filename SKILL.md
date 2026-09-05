@@ -15,37 +15,71 @@ Generate a daily summary of work done across your tracked git projects and send 
 
 ## The Process
 
-### Phase 1: Interview (Grilling Approach)
+### Phase 1: Interview (Grilling)
 
-I'll interview you to understand your setup. I'll ask questions naturally, in your language, building a shared understanding step by step.
+I'll interview you to reach a shared understanding. Questions are organized in **rounds**—each round covers all decisions that don't depend on future answers.
 
-**How this works:**
-- I ask what I need to know (schedule, projects, Telegram setup, etc.)
-- You answer naturally — no specific format needed
-- Based on your answers, I unlock new questions or clarify dependencies
-- When all decisions are settled, we generate your script
+**Format:**
+- ❓ = Question
+- ➡️ = My recommended answer (accept or change it)
+- After each round, based on your answers, I compute the next frontier of questions
 
-**What I need to understand:**
-
-1. **Timing & Access** — When do you want the brief? Do you have Telegram set up?
-2. **Projects** — Which projects to monitor? (paths, how many, any GSD projects?)
-3. **Preferences** — What matters in the daily summary? (just commits, or also project status, file changes?)
-4. **Telegram** — Do you have bot token & user ID, or do you need help creating them?
+**The interview ends** when every decision is settled.
 
 ---
 
-### Phase 2: Script Generation
+## Round 1: Foundation
 
-Once we've discussed these topics and reached understanding, I'll:
+❓ **Q1** - **Why do you need Session Brief? What are you trying to track?**
 
-1. ✅ Generate a custom `session-brief.sh` script for your setup
-2. ✅ Create `~/.session-brief/config.json` with your configuration  
-3. ✅ Help you install the cron job
-4. ✅ Send a test message to verify everything works
+Are you looking to see what code you wrote each day for personal tracking? Want to report progress on specific projects? Or something else?
+
+What matters most to you in the daily summary?
+
+➡️ Daily work tracking + project status overview
 
 ---
 
-**Ready to start?** Just tell me what you're trying to do, and we'll take it from there.
+❓ **Q2** - **Which projects should I monitor?**
+
+Give me the paths to your git projects, or just tell me: how many projects, and which ones are GSD projects (have `.planning/STATE.md`)?
+
+Examples:
+```
+/Users/you/gsd-addon (GSD)
+/Users/you/soapwavehealing (GSD)
+/Users/you/my-app (regular)
+```
+
+➡️ I'll scan these projects for yesterday's git commits
+
+---
+
+❓ **Q3** - **What about Telegram—do you have a bot set up?**
+
+Do you already have a Telegram bot token from @BotFather and your user ID? Or do you need me to walk you through creating one?
+
+➡️ If not, I'll guide you step by step
+
+---
+
+**Your turn:** Answer Q1-Q3 (or adjust the recommended answers). Once you do, I'll ask any follow-up questions and then generate your script.
+
+---
+
+## After the Interview: Generation & Setup
+
+Once all decisions are settled, I will:
+
+1. ✅ Generate a custom `session-brief.sh` script for your exact setup
+2. ✅ Create `~/.session-brief/config.json` with your configuration
+3. ✅ Help you install a cron job to run it daily
+4. ✅ Send a test message to Telegram
+5. ✅ Done! You'll get briefs every morning automatically
+
+---
+
+**Ready?** Just answer the three questions above, and we'll move forward.
 
 ### Phase 2: Generate Custom Script
 
