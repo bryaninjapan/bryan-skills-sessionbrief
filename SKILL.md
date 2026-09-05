@@ -15,14 +15,143 @@ Generate a daily summary of work done across your tracked git projects and send 
 
 ## The Process
 
-### Phase 1: Gather Your Setup
+### Phase 1: Interview (Grilling)
 
-I'll ask you a few questions to understand your environment:
+I'll interview you systematically about your needs. Questions are organized in **rounds**. Each round asks all questions whose answers don't depend on future decisions.
 
-1. **Schedule** — What time do you want the brief? (e.g., 7 AM)
-2. **Projects** — Which projects should I monitor? (paths to git repos)
-3. **Telegram** — Your bot token and user ID
-4. **Optional: Key Files** — Any files per project to track changes to? (e.g., `.planning/STATE.md`, `package.json`, `main.rs`)
+**Format:**
+- ❓ = Question  
+- ➡️ = My recommended answer (accept or override)
+- **After each round**, you answer, and I recompute the frontier for the next round
+
+**The interview is done** when every decision is settled and we reach shared understanding.
+
+---
+
+## Round 1: Foundation
+
+❓ **Q1** - **Daily Notification Timing**: What time should you receive the brief each morning? (e.g., 7 AM, 8 AM)
+
+➡️ 7:00 AM Asia/Tokyo (adjust for your timezone)
+
+---
+
+❓ **Q2** - **Project Scope**: How many projects do you want to monitor? 
+
+Options:
+- Just 1 (single project focus)
+- 2-3 (core projects)
+- 4+ (many projects, comprehensive view)
+
+➡️ 2-3 (a good balance for most people)
+
+---
+
+❓ **Q3** - **Telegram Setup Status**: Do you already have a Telegram bot and know your user ID?
+
+Options:
+- Yes, I have both
+- No, I need to create them first
+- Not sure
+
+➡️ If unsure, I'll guide you through creation first
+
+---
+
+**Your turn:** Answer Q1-Q3 above (or tell me to adjust the recommended answers). Once you answer, I'll unlock the next round of questions.
+
+---
+
+## Round 2: Projects & Monitoring
+
+*(This round unlocks after Round 1)*
+
+❓ **Q4** - **Project Paths**: List the full paths to the projects you want to monitor.
+
+Example:
+```
+/Users/you/Documents/project1
+/Users/you/Documents/project2
+/Users/you/Documents/project3
+```
+
+➡️ I'll use `git log --since="yesterday"` to extract commits from each path
+
+---
+
+❓ **Q5** - **Key Files to Track**: For each project, are there specific files you want to monitor for changes?
+
+Options:
+- Default files only (commit history is enough)
+- Track specific files (e.g., `.planning/STATE.md`, `package.json`, `Cargo.toml`)
+- Mix (some projects tracked, others not)
+
+➡️ Default files only (simpler, covers 80% of cases)
+
+---
+
+❓ **Q6** - **GSD Integration**: Do any of your projects use the GSD framework (have `.planning/STATE.md`)?
+
+Options:
+- Yes, some or all of them do
+- No, they're regular projects
+- Mixed
+
+➡️ I'll auto-detect and show GSD status when available
+
+---
+
+**Your turn:** Answer Q4-Q6. I'll then move to Round 3 (Telegram setup).
+
+---
+
+## Round 3: Telegram Configuration
+
+*(This round unlocks after Round 2)*
+
+❓ **Q7** - **Telegram Bot Status**: 
+
+- Do you already have a Telegram bot token from @BotFather?
+- Do you know your Telegram user ID?
+
+Options:
+- Yes to both
+- No to both (need guidance)
+- Partial (have token, need user ID)
+
+➡️ If "No to both", I'll guide you through the process
+
+---
+
+❓ **Q8** - **Brief Format Preference**: How detailed should the daily brief be?
+
+Options:
+- Concise (commits only)
+- Detailed (commits + GSD status + file changes)
+- Custom (specify what matters most)
+
+➡️ Detailed (most informative for tracking progress)
+
+---
+
+**Your turn:** Answer Q7-Q8. Once done, we move to the final phase.
+
+---
+
+## After the Interview: Script Generation & Installation
+
+Once all decisions are settled, I will:
+
+1. ✅ Create a custom `session-brief.sh` script based on your answers
+2. ✅ Create `~/.session-brief/config.json` with your configuration
+3. ✅ Install a cron job to run the script at your chosen time
+4. ✅ Send you a test message to Telegram to verify everything works
+
+---
+
+**Ready to start the interview?**
+
+Say: **"Let's grill"** or just answer the questions from Round 1 above, and I'll proceed.
 
 ### Phase 2: Generate Custom Script
 
